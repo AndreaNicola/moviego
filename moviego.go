@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/tidwall/gjson"
@@ -92,7 +93,13 @@ func (V Video) ResizeByWidth(requiredWidth int64) Video {
 
 func (V Video) Hls() Video {
 	V.addKwArgs("f", "hls")
-	V.addKwArgs("hls_time", "3")
+	V.hasModified = true
+	return V
+}
+
+func (V Video) HlsTime(time int) Video {
+	V.addKwArgs("f", "hls")
+	V.addKwArgs("hls_time", strconv.Itoa(time))
 	V.hasModified = true
 	return V
 }
